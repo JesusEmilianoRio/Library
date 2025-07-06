@@ -1,0 +1,51 @@
+# ── 1. Python ──────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+
+# ── 2. Entornos virtuales ──────────────────────────
+venv/
+.env/
+.venv/
+env/
+.env
+
+# ── 3. Herramientas de desarrollo / IDE ───────────
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+
+# ── 4. Archivos de configuración sensibles ─────────
+.env                # tu fichero de variables de entorno
+supabase/.env       # si usas Supabase CLI
+.supabase/          # tokens / config internos de Supabase CLI
+
+# ── 5. Bases de datos y backups locales ────────────
+db.sqlite3
+*.sqlite3
+*.dump
+*.sql
+
+# ── 6. Archivos generados en tiempo de ejecución ───
+*.log
+*.pot
+*.pyc
+.DS_Store           # macOS
+Thumbs.db           # Windows
+
+# ── 7. Front-end / staticfiles (generados) ─────────
+staticfiles/
+node_modules/
+
+# ── 8. Cobertura y pruebas ─────────────────────────
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
