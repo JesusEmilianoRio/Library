@@ -59,7 +59,8 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        #Overextend django.contrib.auth templates.
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,15 +90,11 @@ if ENVIRONMENT == 'PRODUCTION':
     }
 else:
     DATABASES = {
-        "default" : {
-            "ENGINE" : os.getenv('ENGINE'),
-            "NAME" : os.getenv('DATABASE_NAME'),
-            "USER" : os.getenv('DATABASE_USER'),
-            "PASSWORD" : os.getenv("DATABASE_PASSWORD"),
-            "HOST" : os.getenv("DATABASE_HOST"),
-            "PORT" : os.getenv("DATABASE_PORT"),
-        }
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -140,4 +137,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+#MODEL USER
 AUTH_USER_MODEL = 'account.User'
+
