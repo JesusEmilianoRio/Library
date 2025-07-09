@@ -35,13 +35,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +142,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #MODEL USER
 AUTH_USER_MODEL = 'account.User'
 
+# BASIC settings.py FOR AUTH 
+LOGIN_REDIRECT_URL = "account:test" #UNA VEZ CREADO EL DASHBOARD DEFINIR
+LOGIN_URL = "account:login" #IF THE USER ISN'T LOGGED IN, REDIRECT TO /ACCOUNT/LOGIN
+LOGOUT_REDIRECT_URL = "account:login" #IF THE USER LOGGED OUT, REDIRECT TO /ACCOUNT/LOGIN
+
+#EMAIL
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_POST = int(os.getenv('EMAIL_POST'))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == "True"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

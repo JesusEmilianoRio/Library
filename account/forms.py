@@ -1,24 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 #Class that register a User
 User = get_user_model()
 
-def validate_unique_username(value):
-    if User.objects.filter(username=value).exists():
-        raise ValidationError("This username is already taken.")
-    
-def validate_unique_email(value):
-    if User.objects.filter(email=value).exists():
-        raise ValidationError("This email is already taken.")
-
 class RegistrationForm(UserCreationForm):
-    username = forms.CharField(validators=[validate_unique_username])
-    email = forms.EmailField(validators=[validate_unique_email])
-    first_name = forms.CharField()
-    last_name = forms.CharField()
+    username = forms.CharField(max_length=20,
+                               help_text="Choose a unique username",
+                               required=True)
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
 
     class Meta:
         model = User
@@ -31,5 +24,11 @@ class RegistrationForm(UserCreationForm):
             "password2",
         ]
 
+    #Custom hook to validate email
+    def clean_email(self): 
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already taken.")
+        return email
 
 
