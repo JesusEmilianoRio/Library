@@ -61,6 +61,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         #Overextend django.contrib.auth templates.
         'DIRS': [os.path.join(BASE_DIR,'templates'),
+                 os.path.join(BASE_DIR, 'catalog', 'templates'), #Absolute template of Catalog
                  os.path.join(BASE_DIR, 'account', 'templates')], #Absolute template of Account
         'APP_DIRS': True, #App's templates
         'OPTIONS': {
