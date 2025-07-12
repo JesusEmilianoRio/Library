@@ -60,8 +60,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         #Overextend django.contrib.auth templates.
-        'DIRS': [BASE_DIR / "templates"],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR,'templates'),
+                 os.path.join(BASE_DIR, 'account', 'templates')], #Absolute template of Account
+        'APP_DIRS': True, #App's templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -148,9 +149,11 @@ LOGIN_URL = "account:login" #IF THE USER ISN'T LOGGED IN, REDIRECT TO /ACCOUNT/L
 LOGOUT_REDIRECT_URL = "account:login" #IF THE USER LOGGED OUT, REDIRECT TO /ACCOUNT/LOGIN
 
 #EMAIL
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_POST = int(os.getenv('EMAIL_POST'))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == "True"
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
