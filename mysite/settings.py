@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,8 +42,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account',
+    'accounts',
+
+    #Auth Google
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware', #MIDDLEWARE AUTH
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -142,12 +164,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #MODEL USER
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 # BASIC settings.py FOR AUTH 
-LOGIN_REDIRECT_URL = "account:test" #UNA VEZ CREADO EL DASHBOARD DEFINIR
-LOGIN_URL = "account:login" #IF THE USER ISN'T LOGGED IN, REDIRECT TO /ACCOUNT/LOGIN
-LOGOUT_REDIRECT_URL = "account:login" #IF THE USER LOGGED OUT, REDIRECT TO /ACCOUNT/LOGIN
+LOGIN_REDIRECT_URL = "accounts:test" #UNA VEZ CREADO EL DASHBOARD DEFINIR
+LOGIN_URL = "accounts:login" #IF THE USER ISN'T LOGGED IN, REDIRECT TO /ACCOUNT/LOGIN
+LOGOUT_REDIRECT_URL = "accounts:login" #IF THE USER LOGGED OUT, REDIRECT TO /ACCOUNT/LOGIN
 
 #EMAIL
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
@@ -158,3 +180,19 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+#DJANGO ALLAUTH CONFIG
+SITE_ID = 2
+ACCOUNT_LOGIN_METHODS = {'email'} 
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*'] 
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_UNIQUE_EMAIL = True
+
+#BACKEND AUTHENTICATION
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]

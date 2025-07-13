@@ -1,6 +1,6 @@
 <h2>Hola mundo</h2>
 
-<form method="post" action="{% url 'account:logout' %}">
+<form method="post" action="{% url 'accounts:logout' %}">
     {% csrf_token %}
     <button type="submit">Cerrar Sesión</button>
 </form>
