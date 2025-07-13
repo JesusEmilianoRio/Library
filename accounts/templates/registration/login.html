@@ -1,4 +1,5 @@
 {% block content %}
+{% load socialaccount %}
   <h2>Iniciar sesión</h2>
   <form method="post" action="">
     {% csrf_token %}
@@ -17,6 +18,12 @@
       <input type="hidden" name="next" value="{{ next }}">
     {% endif %}
     <button type="submit">Entrar</button>
-    <a href="{%url 'account:reset_password'%}">Forgot password?</a>
+
+    
+    
+    <a href="/accounts/google/login/?next=/accounts/test/">Login con Google</a>
+    </a>
+
+    <a href="{%url 'accounts:reset_password'%}">Forgot password?</a>
   </form>
 {% endblock %}

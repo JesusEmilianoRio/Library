@@ -19,7 +19,7 @@ def register_view(request):
 
         if form.is_valid():
             form.save()
-            return redirect('account:login')
+            return redirect('accounts:login')
 
     else:
         form = RegistrationForm()
@@ -28,7 +28,7 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("account:test") #NEED MODIFICATION
+        return redirect("accounts:test") #NEED MODIFICATION
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -36,7 +36,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("account:test") #NEED MODIFICATION
+            return redirect("accounts:test") #NEED MODIFICATION
     else:
         form = AuthenticationForm()
 
@@ -73,7 +73,7 @@ def reset_password(request):
             )
 
             #Build URL of reset.
-            reset_url = request.build_absolute_uri(reverse('account:reset_password_confirm', kwargs={'token' : reset_token}))
+            reset_url = request.build_absolute_uri(reverse('accounts:reset_password_confirm', kwargs={'token' : reset_token}))
 
             #Send Email
             subject = 'Restablecer contraseña'
@@ -102,12 +102,12 @@ def reset_password(request):
             )
             
             messages.success(request, 'Se ha enviado un email con instrucciones para restablecer tu contraseña.')
-            return redirect('account:login')
+            return redirect('accounts:login')
         
         #In case user doesn't exist.
         except User.DoesNotExist:
             messages.error(request, 'If email does not exist, you will receive instructions for reset your password.')
-            return render(request, 'account:login')
+            return render(request, 'accounts:login')
 
         #In case something went wrong.
         except Exception as e:
@@ -125,14 +125,14 @@ def reset_password_confirm(request, token):
         
         if not token_obj.is_valid():
             messages.error(request, 'The linked expired.')
-            return redirect('account:login')
+            return redirect('accounts:login')
         
         # El usuario real está en token_obj.user
         reset_user = token_obj.user
 
     except PasswordResetToken.DoesNotExist:
         messages.error(request, 'Invalid link.')
-        return redirect('account:login')
+        return redirect('accounts:login')
 
     if request.method == 'POST':
         password1 = request.POST['password1']
@@ -169,7 +169,7 @@ def reset_password_confirm(request, token):
         token_obj.mark_as_used()
 
         messages.success(request, 'Your password has been changed.')
-        return redirect('account:login')
+        return redirect('accounts:login')
 
     # GET METHOD
     return render(request, 'registration/password_reset_confirm.html', {

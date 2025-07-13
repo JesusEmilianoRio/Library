@@ -4,3 +4,8 @@ sqlparse==0.5.3
 python-dotenv==1.1.1   # carga variables desde .env
 dj-database-url==3.0.1
 psycopg2-binary==2.9.10
+
+#GOOGLE AUTH REQUIRED LIBRARIES
+django-allauth==65.10.0
+PyJWT==2.10.1
+cryptography==45.0.5
