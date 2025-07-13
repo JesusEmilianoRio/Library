@@ -1,11 +1,16 @@
-asgiref==3.9.0 
-Django==5.2.4
-sqlparse==0.5.3
-python-dotenv==1.1.1   # carga variables desde .env
-dj-database-url==3.0.1
-psycopg2-binary==2.9.10
-
-#GOOGLE AUTH REQUIRED LIBRARIES
-django-allauth==65.10.0
-PyJWT==2.10.1
+asgiref==3.9.0
+certifi==2025.7.9
+cffi==1.17.1
+charset-normalizer==3.4.2
 cryptography==45.0.5
+dj-database-url==3.0.1
+Django==5.2.4
+django-allauth==65.10.0
+idna==3.10
+psycopg2-binary==2.9.10
+pycparser==2.22
+PyJWT==2.10.1
+python-dotenv==1.1.1
+requests==2.32.4
+sqlparse==0.5.3
+urllib3==2.5.0
