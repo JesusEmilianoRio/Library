@@ -57,6 +57,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
+    #Tailwind CSS
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 ]
 
 #Google Auth
@@ -82,6 +87,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware', #MIDDLEWARE AUTH
+    'django_browser_reload.middleware.BrowserReloadMiddleware', #Tailwind CSS
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -228,4 +234,10 @@ AUTHENTICATION_BACKENDS = [
 
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+#Tailwind CSS configuration
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1"
 ]
