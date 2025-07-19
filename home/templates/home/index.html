@@ -104,14 +104,15 @@
             <div>
                 <h2 class="text-xl font-bold mb-6">Recommended</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {% for book in recommended_books %}
+                    {% for book in books %}
                     <div>
-                        <img src="{{ book.image_url }}" alt="{{ book.title }}" class="w-full rounded shadow">
+                        <img src="{{ book.book_image }}" alt="{{ book.book_title }}" class="w-full rounded shadow">
                         <h3 class="mt-2 font-semibold">{{ book.title }}</h3>
                         <p class="text-sm text-gray-500">By {{ book.author }}</p>
                     </div>
                     {% endfor %}
                 </div>
+                
             </div>
 
             <!-- Popular -->
