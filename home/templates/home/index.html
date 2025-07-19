@@ -2,24 +2,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Django Tailwind</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MYBOOK</title>
     {% tailwind_css %}
 </head>
+<body class="bg-white text-gray-800 font-sans">
 
-<body class="bg-gray-50 text-black font-serif leading-normal tracking-normal">
+    <!-- Header -->
+    <section class="relative w-full h-screen bg-gradient-to-r from-white to-orange-100 overflow-hidden">
+  <!-- Navbar -->
+  <header class="flex justify-between items-center px-8 py-6">
+    <div class="flex items-center space-x-2">
+      <span class="text-xl font-bold text-gray-900">MYBOOK</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1 13H4L3 3z" />
+      </svg>
+    </div>
+    <nav class="hidden md:flex items-center space-x-6">
+      <a href="#" class="text-gray-700 hover:text-orange-500">Explorer</a>
+      <a href="#" class="text-gray-700 hover:text-orange-500">Shop</a>
+      <a href="#" class="text-gray-700 hover:text-orange-500">Blog</a>
+      <button class="bg-white border border-gray-400 text-black px-4 py-1 rounded-full hover:bg-gray-100 transition">Log in</button>
+    </nav>
+  </header>
 
-    <div class="toast toast-top toast-end">
-        <div class="alert alert-info">
-            <span class="text-amber-800">Hello from daisyUi 👋</span>
-        </div>
+  <!-- Hero Content -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 md:px-16 lg:px-24 py-12 md:py-20 items-center">
+    <!-- Left -->
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+        READ AND ADD<br />YOUR INSIGHT
+      </h1>
+      <p class="text-gray-700 text-lg mb-6">Find Your Favorite Book And Read It Here For Free</p>
+      <div class="bg-white rounded-md shadow-md flex items-center p-2 w-full max-w-md">
+        <svg class="w-5 h-5 text-gray-400 mx-2" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" placeholder="Search Book"
+               class="w-full border-none outline-none px-2 text-gray-700 placeholder-gray-400" />
+      </div>
     </div>
 
-<div class="container mx-auto">
-    <section class="flex items-center justify-center h-screen">
-        <h1 class="text-5x1 text-emerald-700">Django + Tailwind = ❤️</h1>
-    </section>
+    <!-- Right (Image) -->
+    <div class="relative">
+      <div class="absolute inset-y-0 -left-20 w-1/2 bg-orange-500 rounded-bl-full rounded-tl-full z-0 hidden md:block"></div>
+      <img src="/static/images/hero-book-girl.png" alt="Girl Reading Book"
+           class="relative z-10 w-full max-w-sm mx-auto rounded-md" />
+    </div>
+  </div>
+</section>
+
+
+    <main class="flex px-6 py-12 space-x-8">
+        <!-- Sidebar -->
+        <aside class="w-1/5 hidden md:block">
+            <div>
+                <h2 class="font-bold mb-4">Book by Genre</h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="text-orange-500 font-semibold">All Genres</li>
+                    <li>Business</li>
+                    <li>Science</li>
+                    <li>Fiction</li>
+                    <li>Philosophy</li>
+                    <li>Biography</li>
+                </ul>
+            </div>
+            <div class="mt-8">
+                <h2 class="font-bold mb-4">Recommendations</h2>
+                <ul class="space-y-2 text-sm">
+                    <li>Artist of the Month</li>
+                    <li>Book of the Year</li>
+                    <li>Top Genre</li>
+                    <li>Trending</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="flex-1 space-y-12">
+            <!-- Recommended -->
+            <div>
+                <h2 class="text-xl font-bold mb-6">Recommended</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {% for book in recommended_books %}
+                    <div>
+                        <img src="{{ book.image_url }}" alt="{{ book.title }}" class="w-full rounded shadow">
+                        <h3 class="mt-2 font-semibold">{{ book.title }}</h3>
+                        <p class="text-sm text-gray-500">By {{ book.author }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Popular -->
+            <div>
+                <h2 class="text-xl font-bold mb-6">Popular</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    {% for book in popular_books %}
+                    <div>
+                        <img src="{{ book.image_url }}" alt="{{ book.title }}" class="w-full rounded shadow">
+                        <h3 class="mt-2 text-sm font-medium">{{ book.title }}</h3>
+                        <p class="text-xs text-gray-500">{{ book.author }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- This new story -->
+            <div>
+                <h2 class="text-xl font-bold mb-6">This new story</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    {% for book in new_stories %}
+                    <div>
+                        <img src="{{ book.image_url }}" alt="{{ book.title }}" class="w-full rounded shadow">
+                        <h3 class="mt-2 text-sm font-medium">{{ book.title }}</h3>
+                        <p class="text-xs text-gray-500">By {{ book.author }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Which they like -->
+            <div>
+                <h2 class="text-xl font-bold mb-6">Which they like</h2>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                    {% for book in liked_books %}
+                    <div>
+                        <img src="{{ book.image_url }}" alt="{{ book.title }}" class="w-full rounded shadow">
+                        <h3 class="mt-2 text-sm font-medium">{{ book.title }}</h3>
+                        <p class="text-xs text-gray-500">{{ book.author }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-orange-500 text-white text-sm text-center py-4">
+        <p>2020 MYBOOK</p>
+        <div class="mt-2 flex justify-center space-x-4">
+            <a href="#" class="hover:underline">Explorer</a>
+            <a href="#" class="hover:underline">Shop</a>
+            <a href="#" class="hover:underline">About</a>
+        </div>
+    </footer>
+
 </body>
 </html>
