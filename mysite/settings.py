@@ -210,24 +210,40 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 
 #BASIC STORAGE CONFIGURATION FOR AMAZON S3
+# Static files (CSS, JavaScript, Images)
+
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_FILE_OVERWRITE = False
 
-MEDIA_URL  = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+if DEBUG:
+    # Usar almacenamiento local para static (Tailwind, etc.)
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'theme', 'static')]
 
-STORAGES = {
-    #Media file (image) management
-    "default" : {
-        "BACKEND" : "storages.backends.s3boto3.S3Boto3Storage",
-    },
+    # Pero seguir usando S3 para media (imagenes)
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",  # media (imagenes) en S3
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",  # static local
+        },
+    }
+else:
+    # Producción: todo desde S3
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 
-    #CSS and JS file management
-    "staticfiles" : {
-        "BACKEND" : "storages.backends.s3boto3.S3StaticStorage",
-    },
-}
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",  # media en S3
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",  # static en S3
+        },
+    }
+
 
 
 #BACKEND AUTHENTICATION
@@ -251,14 +267,3 @@ INTERNAL_IPS = [
 
 # Static files (CSS, JavaScript, Images)
 # Temporary settings for development
-if DEBUG:
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'theme', 'static')]
-    STORAGES = {
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        },
-    }
