@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'catalog',
     'home',
 
+    #payment Stripe
+    'payments',
+
     #AWS
     'storages',
     #Auth Google
@@ -57,6 +60,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
+    #Tailwind CSS
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 ]
 
 #Google Auth
@@ -82,6 +90,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware', #MIDDLEWARE AUTH
+    'django_browser_reload.middleware.BrowserReloadMiddleware', #Tailwind CSS
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -229,3 +238,27 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+#STRIPE PYAMENTS
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+
+#Tailwind CSS configuration
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
+
+# Static files (CSS, JavaScript, Images)
+# Temporary settings for development
+if DEBUG:
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'theme', 'static')]
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
