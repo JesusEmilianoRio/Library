@@ -220,7 +220,7 @@ STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
 STORAGES = {
     #Media file (image) management
     "default" : {
-        "BACKEND" : "storages.backends.s3boto3.S3StaticStorage",
+        "BACKEND" : "storages.backends.s3boto3.S3BotoStorage",
     },
 
     #CSS and JS file management
