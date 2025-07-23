@@ -3,6 +3,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files import File
 from django.utils.text import slugify
+from django.urls import reverse
 
 #Class that filters categories
 class Category(models.Model):
@@ -99,6 +100,10 @@ class Book(models.Model):
     def __str__(self):
         return self.book_title
     
+    
+    def get_absolute_url(self):
+        return reverse('catalog:book_detail', kwargs={'pk': self.pk})
+
     def save(self, *args, **kwargs):
         #If not slug, it will create a new one with book_title
         if not self.book_slug:

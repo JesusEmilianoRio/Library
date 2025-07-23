@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.book_title }} - Detalle del Libro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .book-container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .book-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .book-image {
+            flex-shrink: 0;
+        }
+        
+        .book-image img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .book-main-info {
+            flex-grow: 1;
+        }
+        
+        .book-title {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+        
+        .book-author {
+            color: #34495e;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        .book-price {
+            font-size: 2em;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .book-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .book-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .detail-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            color: #555;
+        }
+        
+        .book-synopsis {
+            margin-top: 30px;
+        }
+        
+        .synopsis-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .synopsis-text {
+            line-height: 1.6;
+            color: #555;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            background: #3498db;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .author-bio {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .book-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .book-image img {
+                max-width: 250px;
+            }
+            
+            .book-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="book-container">
+        <div class="book-header">
+            <div class="book-image">
+                {% if book.book_image %}
+                    <img src="{{ book.book_image.url }}" alt="{{ book.book_title }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x400?text=Sin+Imagen" alt="Sin imagen disponible">
+                {% endif %}
+            </div>
+            
+            <div class="book-main-info">
+                <h1 class="book-title">{{ book.book_title }}</h1>
+                <p class="book-author">por {{ book.author }}</p>
+                <p class="book-price">${{ book.book_price }}</p>
+                
+                <div class="book-status {% if book.book_status == 'A' %}status-active{% else %}status-inactive{% endif %}">
+                    {% if book.book_status == 'A' %}
+                        ✓ DISPONIBLE
+                    {% else %}
+                        ✗ AGOTADO
+                    {% endif %}
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-title">Stock Disponible:</div>
+                    <div class="detail-value">{{ book.book_stock_quantity }} unidades</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-details">
+            <div class="detail-card">
+                <div class="detail-title">ISBN:</div>
+                <div class="detail-value">{{ book.book_ISBN }}</div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">SKU:</div>
+                <div class="detail-value">{{ book.book_sku }}</div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">Páginas:</div>
+                <div class="detail-value">{{ book.book_number_pages }} páginas</div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">Fecha de Publicación:</div>
+                <div class="detail-value">{{ book.book_published|date:"d/m/Y" }}</div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">Editorial:</div>
+                <div class="detail-value">{{ book.publisher }}</div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">Idiomas:</div>
+                <div class="detail-value">
+                    <div class="tag-list">
+                        {% for language in book.languages.all %}
+                            <span class="tag">{{ language.language_name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">Formatos:</div>
+                <div class="detail-value">
+                    <div class="tag-list">
+                        {% for format in book.formats.all %}
+                            <span class="tag">{{ format.type_format }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-title">Categorías:</div>
+                <div class="detail-value">
+                    <div class="tag-list">
+                        {% for cat in book.category.all %}
+                            <span class="tag">{{ cat }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-synopsis">
+            <h2 class="synopsis-title">Sinopsis</h2>
+            <div class="synopsis-text">
+                {{ book.book_synopsis|linebreaks }}
+            </div>
+        </div>
+        
+        <div class="book-synopsis">
+            <h2 class="synopsis-title">Sobre el Autor</h2>
+            <div class="author-bio">
+                <strong>{{ book.author }}</strong><br>
+                {{ book.author.author_bio|linebreaks }}
+            </div>
+        </div>
+    </div>
+    
+    <section class="related-books">
+  <h2>Otros Libros</h2>
+  <ul>
+    {% for other in other_books %}
+      <li>
+        <a href="{{ other.get_absolute_url }}">
+          {{ other.book_title }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No hay otros libros para mostrar.</li>
+    {% endfor %}
+  </ul>
+</section>
+
+</body>
+</html>

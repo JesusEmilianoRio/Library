@@ -265,5 +265,4 @@ INTERNAL_IPS = [
     "127.0.0.1"
 ]
 
-# Static files (CSS, JavaScript, Images)
-# Temporary settings for development
+

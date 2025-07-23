@@ -2,7 +2,9 @@ from django.db import models
 from accounts.models import User
 from catalog.models import Book
 from django.core.validators import MinValueValidator
+
 # Create your models here.
+
 class UserPayment(models.Model):
     STATUS_CHOICES = [
          ('pending', 'Pending'),
@@ -14,6 +16,19 @@ class UserPayment(models.Model):
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
     stripe_customer_id = models.CharField(max_length=255)
     stripe_session_id  = models.CharField(max_length=255, unique=True)
+    stripe_product_id = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        unique=True,
+        help_text="ID Stripe Product"
+    )
+    stripe_price_id = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="ID del precio en Stripe (optional)"
+    )
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, 
                                 decimal_places=2,
