@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'accounts',
     'catalog',
     'home',
+    'car',
 
     #payment Stripe
     'payments',
@@ -265,4 +266,6 @@ INTERNAL_IPS = [
     "127.0.0.1"
 ]
 
-
+# Static files (CSS, JavaScript, Images)
+# Temporary settings for development
+NPM_BIN_PATH = r'/usr/bin/npm'
